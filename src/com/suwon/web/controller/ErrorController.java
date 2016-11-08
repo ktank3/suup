@@ -21,6 +21,6 @@ public class ErrorController extends HttpServlet {
 		TilesContainer container = TilesAccess.getContainer(request.getSession().getServletContext());
 		container.render("root.error", request, response);
 		container.endContext(request,response);
-	}
+	}///이것이 오류컨트롤러
 
 }
