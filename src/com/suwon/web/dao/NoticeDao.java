@@ -8,14 +8,19 @@ import com.suwon.web.entities.Notice;
 import com.suwon.web.model.NoticeModel;
 
 public interface NoticeDao {
-	//µ¥ÀÌÅÍº£ÀÌ½º Å×ÀÌºí°ú °°Àº ÀÌ¸§
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
 	Notice get(String _code) ;
 	List<NoticeModel> getList(int page, String field, String query);
 	List<NoticeModel> getList(int page);
 	List<NoticeModel> getList();
 	
+	Notice getPrev(String code);
+	Notice getNext(String code);
+	int hitUp(String code);
+	
 	int insert(Notice notice);
 	int update(Notice notice);
 	int delete(String code);
 	int getCount(String field, String query);
+	String getLastCode();
 }

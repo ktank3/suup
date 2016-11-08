@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 import com.suwon.web.dao.NoticeDao;
+import com.suwon.web.dao.NoticeFileDao;
 import com.suwon.web.entities.Notice;
 import com.suwon.web.model.NoticeModel;
 
@@ -34,8 +35,10 @@ public class MyBatisNoticeDao implements NoticeDao{
 		SqlSession session = ssf.openSession();
 		NoticeDao noticeDao = session.getMapper(NoticeDao.class);
 		
+		List<NoticeModel> result = noticeDao.getList(page,field, query);
+		session.close();
 		
-		return noticeDao.getList(page, field, query);
+		return result;
 	}
 
 	@Override
@@ -73,7 +76,7 @@ public class MyBatisNoticeDao implements NoticeDao{
 		
 		int result = noticeDao.update(notice);
 		
-		//mybatis´Â auto-commit¾Æ´Ï¶ó ½áÁà¾ßµÊ
+		//mybatisï¿½ï¿½ auto-commitï¿½Æ´Ï¶ï¿½ ï¿½ï¿½ï¿½ï¿½ßµï¿½
 		session.commit();
 		session.close();
 		
@@ -89,8 +92,7 @@ public class MyBatisNoticeDao implements NoticeDao{
 		int result = noticeDao.delete(code);
 		
 		session.commit();
-		session.close();
-		
+		session.close();		
 		
 		return result;
 	}
@@ -105,5 +107,51 @@ public class MyBatisNoticeDao implements NoticeDao{
 		
 		return result;
 	}
+
+	@Override
+	public String getLastCode() {
+		SqlSession session = ssf.openSession();
+		NoticeDao noticeDao = session.getMapper(NoticeDao.class);
+		
+		String result = noticeDao.getLastCode();
+		session.close();
+		
+		return result;
+	}
+
+	@Override
+	public Notice getPrev(String code) {
+		SqlSession session = ssf.openSession();
+		NoticeDao noticeDao = session.getMapper(NoticeDao.class);
+
+		Notice result = noticeDao.getPrev(code);
+		session.close();
+		
+		return result;
+	}
+
+	@Override
+	public Notice getNext(String code) {
+		SqlSession session = ssf.openSession();
+		NoticeDao noticeDao = session.getMapper(NoticeDao.class);
+
+		Notice result = noticeDao.getNext(code);
+		session.close();
+		
+		return result;
+	}
+
+	@Override
+	public int hitUp(String code) {
+		SqlSession session = ssf.openSession();
+		NoticeDao noticeDao = session.getMapper(NoticeDao.class);
+		
+		int result = noticeDao.hitUp(code);
+		session.commit();
+		session.close();
+		
+		return result;
+	}
+	
 	
 }

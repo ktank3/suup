@@ -1,10 +1,13 @@
 SELECT * FROM NOTICES;
+delete notices where writer='deok'
+SELECT * FROM member;
 
-INSERT INTO NOTICES(CODE, TITLE, CONTENT, WRITER) VALUES('1082','µµ¿ÍÁÖ¼¼¿ä','µµ¿òÀÌ ÇÊ¿äÇØ¿ä','ÁØ¸ğÇü');
+INSERT INTO NOTICES(CODE, TITLE, CONTENT, WRITER) VALUES('1082','ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Ø¿ï¿½','ï¿½Ø¸ï¿½ï¿½ï¿½');
 
 SELECT ISNULL(MAX(CONVERT(INT,CODE)),0)+1 AS CODE FROM NOTICES
 SELECT ISNULL(MAX(CAST(CODE AS INT)),0)+1 AS CODE FROM NOTICES
 
+select * from members
 
 SELECT *  
 	FROM(
@@ -25,7 +28,7 @@ FROM NOTICES
 WHERE NUM BETWEEN 1 AND 10
 
 
----´ñ±Û ¼ö¸¦ Ãâ·ÂÇÏ±â À§ÇÑ ºä
+---ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 SELECT N.*, COUNT(C.CODE) AS CMTCNT
 FROM 
 	NOTICES N LEFT OUTER JOIN COMMENTS C ON N.CODE = C.NOTICECODE
@@ -44,5 +47,41 @@ SELECT * FROM (
 WHERE NUM BETWEEN 1 AND 10
 
 
---getCountÄõ¸®
+--getCountï¿½ï¿½ï¿½ï¿½
 SELECT COUNT(CODE) COUNT FROM NOTICES_VIEW WHERE TITLE LIKE '%%'
+
+
+SELECT MAX(CODE) FROM NOTICES
+select * from noticefiles
+----------------------------------------------
+SELECT * FROM NOTICEFILES WHERE NOTICECODE = 0
+INSERT INTO
+		NOTICEFILES(CODE, SRC, NOTICECODE)
+		VALUES()
+		
+		rollback
+		
+select * from noticefiles
+
+-- ì´ì „ê¸€(ì‹œí€„ì—ë§Œ ìˆìŒ)
+select top 1 * from notices
+where code > cast(1339 as int)
+order by regdate asc
+
+-- ë‹¤ìŒê¸€
+select top 1 * from notices
+where code < 1339
+order by regdate desc
+
+--ì¡°íšŒìˆ˜ 1ì—…
+select cmtcnt+1 from notices_view
+where code = 1339
+
+update notices set hit = hit+1
+where code = 1339
+
+
+
+
+
+

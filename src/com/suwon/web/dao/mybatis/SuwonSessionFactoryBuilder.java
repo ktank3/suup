@@ -3,27 +3,44 @@ package com.suwon.web.dao.mybatis;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-public class SuwonSessionFactoryBuilder {
+
+public class SuwonSessionFactoryBuilder extends HttpServlet{
 	
-	//ÇÑ¹ø¸¸ ¸¸µé¾îÁö°Ô Àü¿ªÈ­ ½ÃÅ² ÈÄ ½Ì±ÛÅÏ ÆĞÅÏ Àû¿ë
 	static String src = "com/suwon/web/dao/mybatis/config.xml";
 	static SqlSessionFactory ssf = null;
 	
-	static{		
+	//staticìœ¼ë¡œ í˜¸ì¶œí•˜ëŠ” ê²ƒì´ì•„ë‹ˆë¼ initìœ¼ë¡œ í˜¸ì¶œì„ í•˜ê²Œ ë§Œë“¬
+	@Override
+	public void init(ServletConfig config) throws ServletException {
 		InputStream is = null;
 		try {
 			is = Resources.getResourceAsStream(src);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		// µ¹¸®°Ô ¸¸µë(¸ÅÆÛÄÁÅ×ÀÌ³Ê ¸¸µé±â - ¸ÅÆÛ°¡ ´ã±è)
 		ssf = new SqlSessionFactoryBuilder().build(is);
 	}
-
+	
+	//í”„ë¡œê·¸ë¨ì´ ì‹¤í–‰ë  ë•Œ íŒ©í† ë¦¬ë¹Œë”ê°€(ë§¤í¼ ì»¨í…Œì´ë„ˆ)ê°€ ë§Œë“¤ì–´ì§
+	//ì§€ê¸ˆ ì´ë ‡ê²Œë§Œ ì“°ë©´ ë§¤í¼ì»¨í…Œì´ë„ˆê°€ ì„œë¸”ë¦¿ ì»¨í…Œì´ë„ˆë³´ë‹¤ ë¨¼ì € ìƒì„±ë˜ëŠ” ìƒí™©
+	/*static{		
+		InputStream is = null;
+		try {
+			is = Resources.getResourceAsStream(src);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		ssf = new SqlSessionFactoryBuilder().build(is);
+	}
+*/
 	public static SqlSessionFactory getSqlSessionFactory() {		
 		return ssf;
 	}
